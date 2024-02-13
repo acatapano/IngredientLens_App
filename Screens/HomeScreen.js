@@ -7,7 +7,7 @@ export default function HomeScreen({ navigation }) {
   
           <Image
             style={styles.imageLogo}
-            source={require('/IngredientLens/assets/logo_green.png')}
+            source={require('../assets/logo_green.png')}
           />
   
           <Text style={styles.titleText}>
