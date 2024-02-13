@@ -1,1 +1,1 @@
-Mobile app for INgredient Lens.
+Mobile app for Ingredient Lens.
