@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Platform } from
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-import ImageViewer from '/IngredientLens/components/ImageViewer.js'; 
-import Button from '/IngredientLens/components/Button.js';
+import ImageViewer from '../components/ImageViewer.js'; 
+import Button from '../components/Button.js';
 
-const PlaceholderImage = require('/IngredientLens/assets/favicon.png');
+const PlaceholderImage = require('../assets/favicon.png');
 
 export default function ImageUpload({ navigation }) {
   const [selectedImage, setSelectedImage] = useState(null);
