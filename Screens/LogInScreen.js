@@ -8,8 +8,8 @@ const LoginScreen = () => {
 
 
   const handleLogin = () => {
-    // Here you would typically send a request to your backend server to authenticate the user
-    // For simplicity, let's just do a basic check here
+
+    // add methoad to check databse
     if (username === 'example' && password === 'password') {
       // Successful login
       Alert.alert('Login Successful', 'Welcome!');
