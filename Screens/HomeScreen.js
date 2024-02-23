@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Alert, Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
 
@@ -26,13 +26,13 @@ export default function HomeScreen({ navigation }) {
             Cook like a machine
           </Text>
   
-          <TouchableHighlight onPress={() => navigation.navigate("ImageUpload")}>
+          <TouchableHighlight onPress={() => navigation.navigate("Docs")}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Docs</Text>
             </View>
           </TouchableHighlight>
   
-          <TouchableHighlight onPress={() => navigation.navigate("ImageUpload")}>
+          <TouchableHighlight onPress={() => navigation.navigate("PopularDishes")}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Popular Dishes</Text>
             </View>
