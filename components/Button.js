@@ -6,7 +6,7 @@ export default function Button({ label, theme, onPress }) {
     
     if (theme === "primary") {
         return (
-          <View style={[styles.buttonContainer, { borderWidth: 4, borderColor: "#ffd33d", borderRadius: 18 }]}>
+          <View style={[styles.buttonContainer]}>
             <Pressable
               style={[styles.button, { backgroundColor: "#fff" }]}
               onPress={onPress}
@@ -25,13 +25,13 @@ export default function Button({ label, theme, onPress }) {
 
     if (theme === "secondary") {
         return (
-          <View style={[styles.buttonContainer, { borderWidth: 4, borderColor: "#ffd33d", borderRadius: 18 }]}>
+          <View style={[styles.buttonContainer]}>
             <Pressable
-              style={[styles.button, { backgroundColor: "#fff" }]}
+              style={[styles.button, { backgroundColor: "#17f502" }]}
               onPress={onPress}
             >
               <FontAwesome
-                name="picture-o"
+                name="check"
                 size={18}
                 color="#25292e"
                 style={styles.buttonIcon}

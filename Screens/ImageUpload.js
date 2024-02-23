@@ -10,6 +10,7 @@ const PlaceholderImage = require('../assets/favicon.png');
 
 export default function ImageUpload({ navigation }) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isChosen, setIsChosen] = useState(false);
 
   const chooseImageOrigin = async () =>
     Alert.alert('Camera or Library', 'Would you like to upload an image using your Camera or from your Library?', [
@@ -24,16 +25,17 @@ export default function ImageUpload({ navigation }) {
     //  alert("Sorry, permission not granted.")
     //}
     //else{
-      let result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        quality: 1,
-      });
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
   
-      if (!result.canceled) {
-        setSelectedImage(result.assets[0].uri);
-      } else {
-        alert('You did not select any image.');
-      }
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setIsChosen(true);
+    }  else {
+      alert('You did not select any image.');
+    }
     //}
   };
 
@@ -43,16 +45,17 @@ export default function ImageUpload({ navigation }) {
       //alert("Sorry, not granted.")
     //}
     //else{
-      let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        quality: 1,
-      });
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
   
-      if (!result.canceled) {
-        setSelectedImage(result.assets[0].uri);
-      } else {
-        alert('You did not select any image.');
-      }
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setIsChosen(true);
+    } else {
+      alert('You did not select any image.');
+    }
     //}
   };
 
@@ -68,7 +71,8 @@ export default function ImageUpload({ navigation }) {
       
       <View style={styles.footerContainer}>
         <Button theme="primary" label="Choose a photo" onPress={chooseImageOrigin} />
-        <Button label="Use this photo" onPress={ImagePicker.launchCameraAsync()}/>
+        {isChosen &&
+          <Button theme="secondary" label="Use Photo"/>}
       </View>
       
       <StatusBar style="auto" />
