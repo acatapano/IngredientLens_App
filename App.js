@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './Screens/HomeScreen.js';
-import Docs from './Screens/About.js';
-import PopularDishes from './Screens/About.js';
+import Docs from './Screens/Docs.js';
+import PopularDishes from './Screens/PopularDishes.js';
 import ImageUpload from './Screens/ImageUpload.js';
 import About from './Screens/About.js';
 
