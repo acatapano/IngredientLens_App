@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import { Alert, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { Alert, Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
+
+  const githubURL = 'https://github.com/acatapano/IngredientLens_App';
+
     return (
         <View style={styles.container}>
   
@@ -47,7 +50,7 @@ export default function HomeScreen({ navigation }) {
             </View>
           </TouchableHighlight>
   
-          <TouchableHighlight onPress={() => navigation.navigate("ImageUpload")}>
+          <TouchableHighlight onPress={() => Linking.openURL(githubURL)}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>GitHub</Text>
             </View>
