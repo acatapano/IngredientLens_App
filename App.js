@@ -5,7 +5,7 @@ import Docs from './Screens/Docs.js';
 import PopularDishes from './Screens/PopularDishes.js';
 import ImageUpload from './Screens/ImageUpload.js';
 import About from './Screens/About.js';
-
+import createNewuserScreen from './Screens/createNewuserScreen.js';
 const Stack = createNativeStackNavigator()
 
 export default function App() {
