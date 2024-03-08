@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
             </View>
           </TouchableHighlight>
   
-          <TouchableHighlight onPress={() => navigation.navigate("ImageUpload")}>
+          <TouchableHighlight onPress={() => navigation.navigate("Test")}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Image Upload</Text>
             </View>

@@ -5,6 +5,7 @@ import Docs from './Screens/Docs.js';
 import PopularDishes from './Screens/PopularDishes.js';
 import ImageUpload from './Screens/ImageUpload.js';
 import About from './Screens/About.js';
+import Test from './Screens/Test.tsx'
 
 const Stack = createNativeStackNavigator()
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen name="PopularDishes" component={PopularDishes} />
         <Stack.Screen name="ImageUpload" component={ImageUpload} />
         <Stack.Screen name="About" component={About} />
+        <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     </NavigationContainer>
   );
