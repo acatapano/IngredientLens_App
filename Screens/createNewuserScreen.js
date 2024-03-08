@@ -71,13 +71,26 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  label: {
+    marginBottom: 6,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
+    marginBottom: 16,
+    paddingHorizontal: 10,
+    fontSize: 16,
+    borderRadius: 5,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    backgroundColor: '#2196F3',
+    borderRadius: 5,
   },
 });
 
