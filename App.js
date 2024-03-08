@@ -17,8 +17,8 @@ export default function App() {
         <Drawer.Screen name="Login" component={LogInScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Docs" component={Docs} />
-        <Drawer.Screen name="PopularDishes" component={PopularDishes} />
-        <Drawer.Screen name="ImageUpload" component={ImageUpload} />
+        <Drawer.Screen name="Popular Dishes" component={PopularDishes} />
+        <Drawer.Screen name="Image Upload" component={ImageUpload} />
         <Drawer.Screen name="About" component={About} />
       </Drawer.Navigator>
     </NavigationContainer>
