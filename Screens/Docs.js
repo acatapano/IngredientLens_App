@@ -1,6 +1,9 @@
 import React from 'react';
 import { Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-
+// //<TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
+// <Image source={imageSource} style={styles.buttonImage} />
+// <Text style={styles.buttonText}>{buttonText}</Text>
+// </TouchableOpacity>
 export default function Docs() {
     return (
         <div>
