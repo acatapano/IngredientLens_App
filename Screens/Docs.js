@@ -1,25 +1,25 @@
 import React from 'react';
-import { Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-// //<TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-// <Image source={imageSource} style={styles.buttonImage} />
-// <Text style={styles.buttonText}>{buttonText}</Text>
-// </TouchableOpacity>
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 export default function Docs() {
     return (
-        <div>
-            <Text>
-                This is the Docs page.
-            </Text>
-
-            <TouchableHighlight onPress={() => navigation.navigate("Docs")}>
-                <View style={styles.button}>
-                    <Image
-                        style={styles.imageLogo}
-                        source={require('../assets/logo_green.png')}
-                    />
-                </View>
-            </TouchableHighlight>
-        </div>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>How to Use</Text>
+        <Text style={styles.baseText}>1. Tap &quot;Image Upload&quot;</Text>
+        <Text style={styles.baseText}>2. Upload an image of food</Text>
+        <Text style={styles.baseText}>3. Tap &quot;Generate Labels&quot;</Text>
+        <Text style={styles.baseText}>4. Choose what food to make</Text>
+        <Text style={styles.baseText}>5. Tap &quot;Generate Recipes&quot;</Text>
+        <Text style={styles.baseText}>6. Enjoy your recipe!</Text>
+        <Text style={styles.baseText}>7. Repeat the process for a new recipe</Text>
+          
+        <View style={styles.twocolumns}>
+          <Image source={require('../Screens/images_app/chatgpt.png')} style={styles.buttonImage} />
+          <Image source={require('../Screens/images_app/aws.jpg')} style={styles.buttonImage} />
+          <Image source={require('../Screens/images_app/exposnack.png')} style={styles.buttonImage} />
+          <Image source={require('../Screens/images_app/mu_logo.png')} style={styles.buttonImage} />
+        </View>
+      </View>
     );
 }
 
@@ -30,25 +30,17 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'black',
     },
-    titleText: {
-      fontWeight: 'bold',
-      color: 'white',
-      fontSize: 24,
-      paddingBottom: 10,
-    },
     baseText: {
-      fontSize: 20,
+      fontSize: 14,
       color: 'white',
       textAlign: 'center',
       paddingBottom: 10,
     },
-    cookText: {
-      paddingBottom: 20,
+    titleText: {
+      fontSize: 20,
       color: 'white',
-      fontSize: 14,
-    },
-    greenText: {
-      color: '#229A32',
+      textAlign: 'center',
+      paddingBottom: 10,
     },
     button: {
       marginBottom: 20,
@@ -63,9 +55,16 @@ const styles = StyleSheet.create({
       padding: 20,
       color: 'white',
     },
-    imageLogo: {
+    buttonImage: {
       width: 100,
       height: 100,
     },
+    twocolums: {
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      alignItems: 'flex-start',
+      // does not work right, still only 1 column
+    }
 });
   
