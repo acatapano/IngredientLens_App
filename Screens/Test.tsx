@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Image, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, Image, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -10,6 +10,14 @@ import ImageViewer from '../components/ImageViewer.js';
 import Button from '../components/Button.js';
 
 const PlaceholderImage = require('../assets/favicon.png');
+const dimensions = Dimensions.get('window');
+const windowWidth = dimensions.width;
+
+const countries =[{
+  key: 'United States'},
+  {key: 'Turkey'},
+  {key: 'Uganda'}
+];
 
 export default function Test({ navigation }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -160,8 +168,14 @@ export default function Test({ navigation }) {
   const Item = ({ title }) => (
     <View style={styles.item}>
       <TouchableOpacity onPress={()=>handleListItemClick(title)}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.label}>{title}</Text>
       </TouchableOpacity>
+    </View>
+  );
+
+  const listItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.listItem}>{item}</Text>
     </View>
   );
 
@@ -176,16 +190,24 @@ export default function Test({ navigation }) {
             selectedImage={selectedImage}
           />
         </View>
-      
+
+        {/* <View style={styles.listContainer}>
+          <FlatList
+            data={countries}
+            renderItem={({item}) => <Item title={item.key} />}
+            keyExtractor={item => item.key}
+          />
+        </View> */}
+
         {!labelsGenerated &&
-        <View style={styles.footerContainer}>
-          <Button theme="primary" label="Choose a photo" onPress={chooseImageOrigin} />
+        <View>
+          <Button theme="primary" label="Choose a Photo" onPress={chooseImageOrigin} />
           {isChosen &&
             <Button theme="secondary" label="Generate Labels" onPress={onSubmit}/>}
         </View>}
       
-        {labelsGenerated && isLoading &&
-          <View style={styles.footerContainer}>
+        {labelsGenerated &&
+          <View style={styles.listContainer}>
             <FlatList
               data={detectedList}
               renderItem={({item}) => <Item title={item.key} />}
@@ -195,25 +217,27 @@ export default function Test({ navigation }) {
         }
 
         {labelChosen &&
-          <View style={styles.footerContainer}>
+          <View>
             <Button theme="secondary" label="Generate Recipe" onPress={handleRecipeClick}/>
           </View>
         }
 
-        {/* {!isLoading &&
-          <View style={styles.footerContainer}>
+        {!isLoading && isRecipe &&
+          <View style={styles.listContainer}>
+            <Text style={styles.title}>Ingredients:</Text>
             <FlatList
               data={ingredientList}
-              renderItem={({item}) => <Item title={item.key} />}
-              keyExtractor={item => item.key}
+              renderItem={listItem}
+              keyExtractor={(item, index) => index.toString()}
             />
+            <Text style={styles.title}>Steps:</Text>
             <FlatList
               data={stepsList}
-              renderItem={({item}) => <Item title={item.number} />}
-              keyExtractor={item => item.description}
+              renderItem={listItem}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
-        } */}
+        }
 
       </ScrollView>
     </SafeAreaView>
@@ -230,18 +254,39 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    paddingTop: 58,
+    paddingTop: 20,
+    paddingBottom: 20
   },
   footerContainer: {
-    flex: 1 / 3,
+    flex: 1,
     alignItems: 'center',
   },
+  listContainer: {
+    flex: 1,
+  },
   item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8
+    backgroundColor: "#25292e",
+    padding: 10,
+    marginVertical: 0,
+    width: windowWidth,
+    borderColor: '#ffffff',
+    borderWidth: 1,
+  },
+  label: {
+    fontSize: 20,
+    color: '#ffffff',
+    textAlign: 'center'
+  },
+  listItem: {
+    fontSize: 20,
+    color: '#ffffff',
   },
   title: {
-    fontSize: 20
-  },
+    fontSize: 30,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+    paddingTop: 10,
+    paddingLeft: 5
+  }
 });

@@ -8,6 +8,7 @@ import ImageUpload from './Screens/ImageUpload.js';
 import About from './Screens/About.js';
 import createNewuserScreen from './Screens/createNewuserScreen.js';
 import LogInScreen from './Screens/LogInScreen.js';
+import Test from './Screens/Test.tsx';
 const Drawer = createDrawerNavigator()
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Drawer.Screen name="Popular Dishes" component={PopularDishes} />
         <Drawer.Screen name="Image Upload" component={ImageUpload} />
         <Drawer.Screen name="About" component={About} />
+        <Drawer.Screen name="Test" component={Test} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

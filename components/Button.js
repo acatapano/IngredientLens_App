@@ -1,6 +1,9 @@
-import { StyleSheet, View, Pressable, Text } from 'react-native';
+import { StyleSheet, View, Pressable, Text, Dimensions } from 'react-native';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as ImagePicker from 'expo-image-picker';
+
+const dimensions = Dimensions.get('window');
+const buttonWidth = dimensions.width;
 
 export default function Button({ label, theme, onPress }) {
     
@@ -54,7 +57,7 @@ export default function Button({ label, theme, onPress }) {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-    width: 320,
+    width: buttonWidth,
     height: 68,
     marginHorizontal: 20,
     alignItems: 'center',
