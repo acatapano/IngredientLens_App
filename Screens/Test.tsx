@@ -9,7 +9,7 @@ import { getBase64, getHashKey } from '../src/generators';
 import ImageViewer from '../components/ImageViewer.js'; 
 import Button from '../components/Button.js';
 
-const PlaceholderImage = require('../assets/favicon.png');
+const PlaceholderImage = require('../assets/logo_green.png');
 const dimensions = Dimensions.get('window');
 const windowWidth = dimensions.width;
 
@@ -249,10 +249,11 @@ export default function Test({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#000',
     alignItems: 'center',
   },
   imageContainer: {
+    
     flex: 1,
     paddingTop: 20,
     paddingBottom: 20
