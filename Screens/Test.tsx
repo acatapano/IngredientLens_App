@@ -213,6 +213,7 @@ export default function Test({ navigation }) {
               renderItem={({item}) => <Item title={item.key} />}
               keyExtractor={item => item.key}
             />
+            <Text style={styles.blank}></Text>
           </View>
         }
 
@@ -253,7 +254,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    
     flex: 1,
     paddingTop: 20,
     paddingBottom: 20
@@ -289,5 +289,9 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     paddingTop: 10,
     paddingLeft: 5
+  },
+  blank: {
+    flex: 1,
+    fontSize: 10
   }
 });
