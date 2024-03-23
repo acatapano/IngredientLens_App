@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Image, Linking, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import Logo from '../src/Icons/logo';
 
 export default function HomeScreen({ navigation }) {
 
@@ -7,11 +8,10 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-  
-          <Image
-            style={styles.imageLogo}
-            source={require('../assets/logo_green.png')}
-          />
+          
+          <View style={styles.logoContainer}>
+            <Logo width={100} height={100} />
+          </View>
   
           <Text style={styles.titleText}>
             Welcome to
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     padding: 20,
     color: 'white',
   },
-  imageLogo: {
-    width: 100,
-    height: 100,
-  },
+  logoContainer: {
+    marginBottom: 10,
+    marginTop: -10
+  }
 });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Image, TouchableHighlight, Text, StyleSheet, Alert } from 'react-native';
-
+import Logo from '../src/Icons/logo';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -22,13 +22,12 @@ const LoginScreen = ({ navigation }) => {
   return (
     
     <View style={styles.container}>
+      
+      <View style={styles.logoContainer}>
+        <Logo width={200} height={400} />
+      </View>
 
-      <Image
-        style={styles.imageLogo}
-        source={require('../assets/logo_green.png')}
-      />
-
-    <Text style={styles.titleText}>
+      <Text style={styles.titleText}>
         Ingredient Lens
       </Text>
 
@@ -98,17 +97,17 @@ const styles = StyleSheet.create({
   },
   titleText: {
     textAlign: 'center',
-    padding: 20,
+    paddingBottom: 20,
     color: 'white',
     fontSize: 32,
   },
-  imageLogo: {
-    width: 200,
-    height: 200,
-  },
   placeholder: {
     color: "white"
-}
+  },
+  logoContainer: {
+    marginBottom: -85,
+    marginTop: -85
+  }
 });
 
 

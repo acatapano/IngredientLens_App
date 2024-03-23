@@ -2,16 +2,18 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Image, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { SvgUri, SvgXml } from 'react-native-svg';
 
 import { callPostGatewayApi, callPostLambda } from '../src/request';
 import { getBase64, getHashKey } from '../src/generators';
 
 import ImageViewer from '../components/ImageViewer.js'; 
 import Button from '../components/Button.js';
+import Logo from '../src/Icons/logo';
 
-const PlaceholderImage = require('../assets/logo_green.png');
 const dimensions = Dimensions.get('window');
 const windowWidth = dimensions.width;
+const PlaceholderImage = require('../assets/logo_green.png');
 
 const countries =[{
   key: 'United States'},
@@ -185,10 +187,16 @@ export default function Test({ navigation }) {
     {/* <View style={styles.container}> */}
       
         <View style={styles.imageContainer}>
-          <ImageViewer
-            placeholderImageSource={PlaceholderImage}
-            selectedImage={selectedImage}
-          />
+          {!isChosen &&
+            <Logo width={windowWidth} height={440} />
+          }
+          
+          {isChosen &&
+            <ImageViewer
+              placeholderImageSource={PlaceholderImage}
+              selectedImage={selectedImage}
+            />
+          }
         </View>
 
         {/* <View style={styles.listContainer}>
