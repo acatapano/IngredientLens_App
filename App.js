@@ -7,20 +7,22 @@ import About from './Screens/About.js';
 import createNewuserScreen from './Screens/createNewuserScreen.js';
 import LogInScreen from './Screens/LogInScreen.js';
 import Test from './Screens/Test.tsx';
+import AppStack from './src/Navigation/AppStack.js';
 
 const Drawer = createDrawerNavigator()
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login">
+      {/* <Drawer.Navigator initialRouteName="Login">
         <Drawer.Screen name="Login" component={LogInScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Docs" component={Docs} />
         <Drawer.Screen name="Popular Dishes" component={PopularDishes} />
         <Drawer.Screen name="Image Upload" component={Test} />
         <Drawer.Screen name="About" component={About} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
+      <AppStack/>
     </NavigationContainer>
   );
 }

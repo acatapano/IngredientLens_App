@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Image, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { SvgUri, SvgXml } from 'react-native-svg';
 
 import { callPostGatewayApi, callPostLambda } from '../src/request';
 import { getBase64, getHashKey } from '../src/generators';
