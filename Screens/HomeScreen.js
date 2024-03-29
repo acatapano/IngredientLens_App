@@ -25,8 +25,27 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.cookText}>
             Cook like a machine
           </Text>
-  
-          <TouchableHighlight onPress={() => navigation.navigate("Docs")}>
+
+          {/* indentation */}
+          <Text></Text>
+
+          <Text style={styles.baseText}>
+            TUTORIAL
+          </Text>
+
+          <Text style={styles.infoText}>
+            Swipe from left to right to navigate the app
+          </Text>
+
+          <Text style={styles.infoText}>
+            Login to save recipes and set preferences
+          </Text>
+
+          <Text style={styles.infoText}>
+            See Docs page for more info
+          </Text>
+
+          {/* <TouchableHighlight onPress={() => navigation.navigate("Docs")}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Docs</Text>
             </View>
@@ -54,7 +73,7 @@ export default function HomeScreen({ navigation }) {
             <View style={styles.button}>
               <Text style={styles.buttonText}>GitHub</Text>
             </View>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
   
         </View>
     );
@@ -86,6 +105,10 @@ const styles = StyleSheet.create({
   },
   greenText: {
     color: '#229A32',
+  },
+  infoText: {
+    color: 'white',
+    fontSize: 16,
   },
   button: {
     marginBottom: 20,
