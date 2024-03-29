@@ -25,6 +25,7 @@ export default function Docs() {
 
 const styles = StyleSheet.create({
     container: {
+      paddingTop: 140,
       alignItems: 'center',
       justifyContent: 'center',
       flex: 1,
@@ -56,15 +57,15 @@ const styles = StyleSheet.create({
       color: 'white',
     },
     buttonImage: {
-      width: 100,
-      height: 100,
+      width: 150,
+      height: 150,
     },
-    twocolums: {
+    twocolumns: {
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
       alignItems: 'flex-start',
-      // does not work right, still only 1 column
+      justifyContent: 'center',
     }
 });
   
