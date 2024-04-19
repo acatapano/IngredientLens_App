@@ -19,7 +19,7 @@ export default function App() {
         Jack Berkowitz - Front end
       </Text>
       <Text style={styles.baseText}>
-        John Costa - Front end
+        John Costa - Mobile app
       </Text>
       <Text style={styles.baseText}>
         Dima Bezborodov - AWS developer

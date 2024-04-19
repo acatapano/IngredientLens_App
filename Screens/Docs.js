@@ -2,6 +2,13 @@ import React from 'react';
 import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Docs() {
+
+  const openBrowser = (url) => {
+    Linking.openURL(url).catch(err =>
+        console.error('An error occurred on press', err)
+    );
+  };
+
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>How to Use</Text>
@@ -12,12 +19,25 @@ export default function Docs() {
         <Text style={styles.baseText}>5. Tap &quot;Generate Recipes&quot;</Text>
         <Text style={styles.baseText}>6. Enjoy your recipe!</Text>
         <Text style={styles.baseText}>7. Repeat the process for a new recipe</Text>
-          
+        
+        <Text></Text>
+        
         <View style={styles.twocolumns}>
-          <Image source={require('../Screens/images_app/chatgpt.png')} style={styles.buttonImage} />
-          <Image source={require('../Screens/images_app/aws.jpg')} style={styles.buttonImage} />
-          <Image source={require('../Screens/images_app/exposnack.png')} style={styles.buttonImage} />
-          <Image source={require('../Screens/images_app/mu_logo.png')} style={styles.buttonImage} />
+          <TouchableOpacity onPress={() => openBrowser('https://openai.com/chatgpt')}>
+            <Image source={require('../Screens/images_app/chatgpt.png')} style={styles.buttonImage} />
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={() => openBrowser('https://aws.amazon.com/about-aws/')}>
+            <Image source={require('../Screens/images_app/aws.jpg')} style={styles.buttonImage} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => openBrowser('https://snack.expo.dev/')}>
+            <Image source={require('../Screens/images_app/exposnack.png')} style={styles.buttonImage} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => openBrowser('https://www.monmouth.edu/')}>
+            <Image source={require('../Screens/images_app/mu_logo.png')} style={styles.buttonImage} />
+          </TouchableOpacity>
         </View>
       </View>
     );
