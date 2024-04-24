@@ -1,9 +1,15 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Touchable } from 'react-native';
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Touchable, Linking } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "../src/AuthContext";
+
+const githubURL = 'https://github.com/acatapano/IngredientLens_App';
 
 const CustomDrawer = (props) => {
+    const {userToken} = useContext(AuthContext);
+    const{logout} = useContext(AuthContext);
+
     return (
         <View style={styles.container}>
             <DrawerContentScrollView 
@@ -14,18 +20,18 @@ const CustomDrawer = (props) => {
                 </View>
             </DrawerContentScrollView>
             <View style={styles.drawerFooter}>
-                <TouchableOpacity onPress={()=>{}} style={styles.footerButton}>
+                <TouchableOpacity onPress={()=> Linking.openURL(githubURL) } style={styles.footerButton}>
                     <View style={styles.buttonView}>
-                        <Ionicons name="share-social-outline" size={22} />
-                        <Text style={styles.buttonLabel}>Tell a Friend</Text>
+                        <Ionicons name="logo-github" size={22} />
+                        <Text style={styles.buttonLabel}>Github</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{}} style={styles.footerButton}>
+                {userToken !== null && <TouchableOpacity onPress={()=>{logout()}} style={styles.footerButton}>
                     <View style={styles.buttonView}>
                         <Ionicons name="exit-outline" size={22} />
                         <Text style={styles.buttonLabel}>Sign Out</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
         </View> 
 
@@ -46,7 +52,8 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     drawerFooter: {
-        padding: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
         borderTopWidth: 1,
         borderTopColor: '#ccc'
     },

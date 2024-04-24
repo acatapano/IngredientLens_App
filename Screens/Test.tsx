@@ -1,24 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text, View, Image, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, Alert, FlatList, SafeAreaView, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
 import { callPostGatewayApi, callPostLambda } from '../src/request';
-import { getBase64, getHashKey } from '../src/generators';
+import { getHashKey } from '../src/generators';
 
 import ImageViewer from '../components/ImageViewer.js'; 
 import Button from '../components/Button.js';
 import Logo from '../src/Icons/logo';
+import { AuthContext } from '../src/AuthContext';
+import { checkToken } from '../src/cookies';
 
 const dimensions = Dimensions.get('window');
 const windowWidth = dimensions.width;
 const PlaceholderImage = require('../assets/logo_green.png');
-
-const countries =[{
-  key: 'United States'},
-  {key: 'Turkey'},
-  {key: 'Uganda'}
-];
 
 export default function Test({ navigation }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -31,6 +26,46 @@ export default function Test({ navigation }) {
   const [isRecipe, setIsRecipe] = useState(false);
   const [labelChosen, setLabelChosen] = useState(false);
   const [labelsGenerated, setLabelsGenerated] = useState(false);
+
+  const [user, setUser] = useState<string>("Guest");
+  const [allergies, setAllergies] = useState([]);
+  const [diet, setDiet] = useState("");
+  const {userToken} = useContext(AuthContext);
+  const [imageHash, setImageHash] = useState("");
+
+  useEffect(() => {
+		const checked = checkToken({userToken});
+
+		if (checked && typeof checked.login === 'string') {
+			console.log('Login:', checked.login);
+			setUser(checked.login);
+      var data = {
+          login: checked.login,
+          item: 'diet'
+      }
+      callPostGatewayApi('get-history', data)
+      .then(async result => {
+          console.log(result.item);
+          setDiet(result.item);
+      })
+      .catch(error => {
+          console.error(error);
+      });
+      data = {
+          login: checked.login,
+          item: 'allergies'
+      }
+      callPostGatewayApi('get-history', data)
+      .then(async result => {
+          console.log(result.item);
+          setAllergies(result.item);
+      })
+      .catch(error => {
+          console.error(error);
+      });
+		}
+
+	}, []);
 
   const handleListItemClick = (key: string) => {
     setDetectedList((prevList) =>
@@ -54,7 +89,9 @@ export default function Test({ navigation }) {
 
     console.log(selectedKey)
     const data = {
-      label: selectedKey
+      label: selectedKey,
+      allergies: allergies,
+      diet: diet
     }
 
     const response = callPostLambda(data)
@@ -62,17 +99,48 @@ export default function Test({ navigation }) {
         setStepsList(result.steps)
         setIngredientList(result.ingredients)
         setIsLoading(false)
+
+        const currentDateTime = new Date()
+        const formattedDateTime = currentDateTime.toLocaleString('en-US', {hour12: false})
+
+        const historyData = {
+          date: formattedDateTime,
+          imageHash: imageHash,
+          labels: detectedList.map(item => item.label),
+          recepie: {
+            ingredients: result.ingredients,
+            steps: result.steps
+          }
+        }
+
+        console.log("History: ", historyData);
+        const data = {
+          login: user,
+          historyItem: historyData
+        }
+
+        callPostGatewayApi('dynamo-update', data)
+          .then(result => {
+            console.log(result)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+        
+        console.log(response)
       })
       .catch(error => {
         console.error(error)
       })
     console.log(response)
   }
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const b64 = base64
-      const id = getHashKey()
+      const id = await getHashKey()
+      setImageHash(id)
       const data = {
         b_image: b64,
         bucket: 'gereral-bucket',
@@ -183,7 +251,6 @@ export default function Test({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-    {/* <View style={styles.container}> */}
       
         <View style={styles.imageContainer}>
           {!isChosen &&
@@ -197,14 +264,6 @@ export default function Test({ navigation }) {
             />
           }
         </View>
-
-        {/* <View style={styles.listContainer}>
-          <FlatList
-            data={countries}
-            renderItem={({item}) => <Item title={item.key} />}
-            keyExtractor={item => item.key}
-          />
-        </View> */}
 
         {!labelsGenerated &&
         <View>
@@ -249,8 +308,6 @@ export default function Test({ navigation }) {
 
       </ScrollView>
     </SafeAreaView>
-      // <StatusBar style="auto" />
-    // </View>
   );
 }
 

@@ -13,6 +13,7 @@ const LoginScreen = ({ navigation }) => {
     if (username === 'example' && password === 'password') {
       // Successful login
       Alert.alert('Login Successful', 'Welcome!');
+      navigation.navigate("Home");
     } else {
       // Failed login
       Alert.alert('Login Failed', 'Invalid username or password');
@@ -37,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
         placeholderTextColor="white"
         value={username}
         onChangeText={text => setUsername(text)}
-        textColor="white"
+        // textColor="white"
       />
 
       <TextInput
@@ -81,6 +82,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
+    color: 'white'
   },
   button: {
     marginBottom: 20,

@@ -9,12 +9,12 @@ import HomeScreen from '../../Screens/HomeScreen.js';
 import Docs from '../../Screens/Docs.js';
 import PopularDishes from '../../Screens/PopularDishes.js';
 import About from '../../Screens/About.js';
-import LogInScreen from '../../Screens/LoginTest';
 import Test from "../../Screens/Test";
+import UserSettings from "../../Screens/UserSettings";
 
 const Drawer = createDrawerNavigator();
 
-const AppStack = () => {
+const LoggedInAppStack = () => {
     return (
         <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />} 
                           screenOptions={{
@@ -27,10 +27,6 @@ const AppStack = () => {
             <Drawer.Screen name="Home" component={HomeScreen} options={{
                 drawerIcon: ({color}) => (
                     <Ionicons name="home-outline" size={22} color={color} />
-                ) }}/>
-            <Drawer.Screen name="Login" component={LogInScreen} options={{
-                drawerIcon: ({color}) => (
-                    <Ionicons name="log-in-outline" size={22} color={color} />
                 ) }}/>
             <Drawer.Screen name="Docs" component={Docs} options={{
                 drawerIcon: ({color}) => (
@@ -48,6 +44,10 @@ const AppStack = () => {
                 drawerIcon: ({color}) => (
                     <Ionicons name="help-circle-outline" size={22} color={color} />
                 ) }}/>
+            <Drawer.Screen name="Settings" component={UserSettings} options={{
+                drawerIcon: ({color}) => (
+                    <Ionicons name="settings-outline" size={22} color={color} />
+                ) }}/>
         </Drawer.Navigator>
     )
 }
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AppStack;
+export default LoggedInAppStack;
