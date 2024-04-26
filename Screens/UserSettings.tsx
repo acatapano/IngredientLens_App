@@ -8,30 +8,18 @@ import { RadioButton, TextInput, Chip } from "react-native-paper";
 import { View, Text, Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const columns = [
-    {
-      key: "allergy",
-      label: "ALLERGY",
-    },
-    {
-      key: "action",
-      label: "ACTION",
-    },
-];
-
-
-
 export default function UserSettings({navigation}) {
     const [selectedDiet, setSelectedDiet] = useState("");
     const [newAllergy, setNewAllergy] = useState("");
     const [allergyList, setAllergyList] = useState([]);
     const {userToken} = useContext(AuthContext);
     const [user, setUser] = useState<string>("?");
-
-    // const [selectedKeys, setSelectedKeys] = React.useState(new Set(["2"]));
+    const [dietChange, setDietChange] = useState(false);
+    const [allergyChange, setAllergyChange] = useState(false);
 
     useEffect(() => {
-		const checked = checkToken({userToken});
+		const checked = checkToken({userToken}.userToken);
+        setDietChange(false);
 
 		if (checked && typeof checked.login === 'string') {
 			console.log('Login:', checked.login);
@@ -44,6 +32,7 @@ export default function UserSettings({navigation}) {
             .then(async result => {
                 console.log(result.item);
                 setSelectedDiet(result.item);
+                console.log("Diet: ", selectedDiet);
             })
             .catch(error => {
                 console.error(error);
@@ -54,25 +43,8 @@ export default function UserSettings({navigation}) {
             }
             callPostGatewayApi('get-history', data)
             .then(async result => {
-                console.log(result.item);
-                // interface AllergyList {
-                //     key: string;
-                //     allergy: string;
-                //     action: string;
-                // }
-
-                // const allergies: AllergyList[] = result.item
-                // const allergyArray: Array<{ key: string, allergy: string, action: string }> = []
-                // allergies.forEach(element => {
-                //     const dict = {
-                //         key: element.allergy,
-                //         allergy: element.allergy,
-                //         action: element.action
-                //     }
-                //     allergyArray.push(dict)
-                // })
-
-                setAllergyList(result.item)
+                setAllergyList(result.item);
+                console.log("Allergies: ", allergyList);
             })
             .catch(error => {
                 console.error(error);
@@ -80,141 +52,94 @@ export default function UserSettings({navigation}) {
 		}
 	}, []);
 
-    // const [value, setValue] = useState("no-limit");
-    // const [selectedValue, setSelectedValue] = useState("no-limit");
-    // const [isSelectionChanged, setIsSelectionChanged] = useState(true);
+    const changeDiet = (newDiet: string) => {
+        setSelectedDiet(newDiet)
+        setDietChange(true)
+    };
 
-    // const handleInputChange = (e: any) => {
-    //     const { name, value } = e.target;
-    //     setFormData({
-    //       ...formData,
-    //       [name]: value,
-    //     });
-    //   };
+    const handleConfirm = () => {
+        const data = {
+            diet: selectedDiet,
+            login: user
+        }
+        callPostGatewayApi('update-diet', data)
+			.then(result => {
+				console.log(result)
+			})
+			.catch (error => {
+				console.error(error)
+			})
 
-    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //     const newValue = event.target.value;
-    //     console.log(value, rowData)
-    //     setSelectedValue(newValue);
-    //     setIsSelectionChanged(!isSelectionChanged);
-    // };
+        setDietChange(false);
+    };
 
-    // const handleConfirm = () => {
-    //     setValue(selectedValue);
-    //     setIsSelectionChanged(true); // Reset selection changed state
-    //     const data = {
-    //         diet: selectedValue,
-    //         login: user
-    //     }
-    //     callPostGatewayApi('update-diet', data)
-	// 		.then(result => {
-	// 			console.log(result)
-	// 		})
-	// 		.catch (error => {
-	// 			console.error(error)
-	// 		})
-    // };
-    // const handlClick = () => {
-    //     setIsFormEnab(!isFormEnab); // Toggle the state
-    //     //setRowData((prevData) => [...prevData, { key: "2", allergy: "None", action: "stee" }]);
-    //     console.log(rowData);
-    // };
-    // const handleDelete = (allegry_: string) => {
-    //     const data = {
-    //         login: user,
-    //         action: "delete",
-    //         allergy: allegry_
-    //     }
+    const handleDelete = (allergy: string) => {
+        const data = {
+            login: user,
+            action: "delete",
+            allergy: allergy
+        }
 
-    //     callPostGatewayApi('update-alleries', data)
-	// 		.then(result => {
-	// 			console.log(result)
-	// 		})
-	// 		.catch (error => {
-	// 			console.error(error)
-	// 		});
+        callPostGatewayApi('update-alleries', data)
+			.then(result => {
+				console.log(result)
+                setAllergyList(result.updated_item.allergies);
+			})
+			.catch (error => {
+				console.error(error)
+			});
+
+    };
+
+    const handleNewAllergy = (allergy: string) => {
+        setNewAllergy(allergy)
+        setAllergyChange(true)
+    };
+
+    const handleUpload = () => {
+        const data = {
+            login: user,
+            action: "add",
+            allergy: newAllergy
+        }
+
+        callPostGatewayApi('update-alleries', data)
+			.then(result => {
+				console.log(result)
+                setAllergyList(result.updated_item.allergies)
+			})
+			.catch (error => {
+				console.error(error)
+			})
         
-    //     const updatedRows = rowData.filter(item => item.allergy !== allegry_);
-    //     setRowData(updatedRows);
-        
-    // }
-    // const handleUpload = () => {
-    //     console.log(formData)
-        
-    //     if(!formData){
-    //         return
-    //     }
-    //     const data = {
-    //         login: user,
-    //         action: "add",
-    //         allergy: formData["input"]
-    //     }
+        setAllergyChange(false);
+        setNewAllergy("");
 
-    //     callPostGatewayApi('update-alleries', data)
-	// 		.then(result => {
-	// 			console.log(result)
-	// 		})
-	// 		.catch (error => {
-	// 			console.error(error)
-	// 		})
-        
-    //     setIsFormEnab(false)
-    //     setRowData(prevItems => [...prevItems, {key: "2", allergy: formData["input"], action: "remove"}])
-
-    // }
-    // const renderCell = (item: { key: string; allergy: string; action: string; }, columnKey: any) => {
-    //     if(item.key === "0"){
-    //         if(columnKey === "allergy"){
-    //             return (
-    //                 <Input
-    //                     name="input"
-    //                     value={formData.input}
-    //                     onChange={handleInputChange}
-    //                     isDisabled={!isFormEnab}
-    //                     placeholder={String(isFormEnab)}
-    //                 />
-    //             )
-    //         }
-    //         else{
-    //             return (
-    //                 <Button
-    //                 onClick={isFormEnab ? handleUpload: handlClick}
-    //                 color={isFormEnab ? 'success' : 'success'}
-    //                 >
-    //                 {isFormEnab ? 'Submit' : 'Enable Form'}
-    //                 </Button>
-    //              )
-    //         }
-    //     }
-    //     else{
-    //         if(columnKey === "allergy"){
-    //             return (item.allergy)
-    //         }
-    //         else{
-    //             return (<Button color="danger" onClick={() => handleDelete(item.allergy)}>
-    //                         Remove
-    //                     </Button>)
-    //         }
-    //     }
-    // }
+    };
 
     const Item = ({ title }) => (
         <View style={styles.item}>
-          <Chip>{title}</Chip> 
+          <Chip 
+            closeIcon="close"
+            onPress={() => console.log("Pressed")} 
+            onClose={() => handleDelete(title)}
+            style={styles.chip}
+            textStyle={{ color: "white", fontSize: 16}}>
+                {title}
+          </Chip>
         </View>
     );
     
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Your Current Diet:</Text>
-            <Text style={styles.title}>{selectedDiet}</Text>
             <View style={styles.radioGroup}>
                 <View style={styles.radioButton}>
                     <RadioButton
                         value="no-limit"
                         status={selectedDiet === 'no-limit' ?
                             'checked' : 'unchecked'}
-                        onPress={() => setSelectedDiet("no-limit")}
+                        onPress={() => changeDiet("no-limit")}
                         color="green"
                     />
                     <Text style={styles.radioLabel}>No Limits</Text>
@@ -224,7 +149,7 @@ export default function UserSettings({navigation}) {
                         value="vegetarian"
                         status={selectedDiet === 'vegetarian' ?
                             'checked' : 'unchecked'}
-                        onPress={() => setSelectedDiet("vegetarian")}
+                        onPress={() => changeDiet("vegetrian")}
                         color="green"
                     />
                     <Text style={styles.radioLabel}>Vegetarian</Text>
@@ -234,7 +159,7 @@ export default function UserSettings({navigation}) {
                         value="gluten-free"
                         status={selectedDiet === 'gluten-free' ?
                             'checked' : 'unchecked'}
-                        onPress={() => setSelectedDiet("gluten-free")}
+                        onPress={() => changeDiet("gluten-free")}
                         color="green"
                     />
                     <Text style={styles.radioLabel}>Gluten-Free</Text>
@@ -244,15 +169,16 @@ export default function UserSettings({navigation}) {
                         value="vegan"
                         status={selectedDiet === 'vegan' ?
                             'checked' : 'unchecked'}
-                        onPress={() => setSelectedDiet("vegan")}
+                        onPress={() => changeDiet("vegan")}
                         color="green"
                     />
                     <Text style={styles.radioLabel}>Vegan</Text>
                 </View>
                 <View style={[styles.buttonContainer]}>
-                    <Pressable
+                    {dietChange &&
+                        <Pressable
                         style={[styles.button, { backgroundColor: "#17f502" }]}
-                        //onPress={{}}
+                        onPress={handleConfirm}
                     >
                         <FontAwesome
                             name="check"
@@ -261,18 +187,17 @@ export default function UserSettings({navigation}) {
                             style={styles.buttonIcon}
                         />
                         <Text style={[styles.buttonLabel, { color: "#25292e" }]}>Confirm</Text>
-                    </Pressable>
+                        </Pressable>
+                    }
                 </View>
             </View>
             <View>
-                <View style={styles.listContainer}>
-                    <Text style={styles.title}>Allergies:</Text>
-                    <FlatList
-                        data={allergyList}
-                        renderItem={({item}) => <Item title={item.key} />}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                </View>
+                <Text style={styles.title}>Allergies:</Text>
+                <FlatList
+                    data={allergyList}
+                    renderItem={({item}) => <Item title={item} />}
+                    extraData={allergyList}
+                />
                 <TextInput
                     style={styles.input}
                     textColor="white"
@@ -284,10 +209,25 @@ export default function UserSettings({navigation}) {
                     placeholderTextColor="white"
                     mode="outlined"
                     label="Enter New Allergy"
-                    secureTextEntry
                     value={newAllergy}
-                    onChangeText={text => setNewAllergy(text)}
+                    onChangeText={text => handleNewAllergy(text)}
                 />
+                <View style={[styles.buttonContainer]}>
+                    {allergyChange && newAllergy !== "" &&
+                        <Pressable
+                        style={[styles.button, { backgroundColor: "#17f502" }]}
+                        onPress={handleUpload}
+                    >
+                        <FontAwesome
+                            name="check"
+                            size={18}
+                            color="#25292e"
+                            style={styles.buttonIcon}
+                        />
+                        <Text style={[styles.buttonLabel, { color: "#25292e" }]}>Confirm</Text>
+                        </Pressable>
+                    }
+                </View>
             </View>
         </View>
     );
@@ -353,9 +293,10 @@ const styles = StyleSheet.create({
         height: 50,
       },
       item: {
-
+        width: 150,
+        paddingBottom: 5
       },
-      listContainer: {
-
+      chip: {
+        backgroundColor: "green",
       }
 });

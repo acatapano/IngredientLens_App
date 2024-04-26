@@ -34,7 +34,7 @@ export default function Test({ navigation }) {
   const [imageHash, setImageHash] = useState("");
 
   useEffect(() => {
-		const checked = checkToken({userToken});
+    const checked = checkToken({userToken}.userToken);
 
 		if (checked && typeof checked.login === 'string') {
 			console.log('Login:', checked.login);
@@ -180,12 +180,25 @@ export default function Test({ navigation }) {
     }
   }
 
-  const chooseImageOrigin = async () =>
+  const reset = () => {
+    setSelectedImage(null);
+    setIsChosen(false);
+    setBase64("");
+    setDetectedList(([]));
+    setStepsList([]);
+    setIngredientList([]);
+    setIsLoading(false);
+    setIsRecipe(false);
+    setLabelChosen(false);
+    setLabelsGenerated(false);
+  }
+
+  const chooseImageOrigin = async () => {
     Alert.alert('Camera or Library', 'Would you like to upload an image using your Camera or from your Library?', [
       {text: 'Camera', onPress: takePhoto},
       {text: 'Photo Library', onPress: pickImageAsync},
       {text: 'Cancel', onPress: () => console.log('cancelled')},
-    ]);  
+    ])};  
 
   const takePhoto = async () => {
     //const {status} = ImagePicker.requestCameraPermissionsAsync();
@@ -303,6 +316,8 @@ export default function Test({ navigation }) {
               renderItem={listItem}
               keyExtractor={(item, index) => index.toString()}
             />
+            <Text> </Text>
+            <Button theme="third" label="Reset" onPress={reset}/>
           </View>
         }
 

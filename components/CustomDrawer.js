@@ -8,7 +8,7 @@ const githubURL = 'https://github.com/acatapano/IngredientLens_App';
 
 const CustomDrawer = (props) => {
     const {userToken} = useContext(AuthContext);
-    const{logout} = useContext(AuthContext);
+    const {logout} = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
@@ -26,7 +26,7 @@ const CustomDrawer = (props) => {
                         <Text style={styles.buttonLabel}>Github</Text>
                     </View>
                 </TouchableOpacity>
-                {userToken !== null && <TouchableOpacity onPress={()=>{logout()}} style={styles.footerButton}>
+                {userToken !== null && <TouchableOpacity onPress={()=>{{logout()}}} style={styles.footerButton}>
                     <View style={styles.buttonView}>
                         <Ionicons name="exit-outline" size={22} />
                         <Text style={styles.buttonLabel}>Sign Out</Text>

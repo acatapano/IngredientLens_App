@@ -1,5 +1,4 @@
 import JWT from "expo-jwt";
-import { SupportedAlgorithms } from "expo-jwt/dist/types/algorithms";
 
 const secretKey = "IngredientLens"; //required
 

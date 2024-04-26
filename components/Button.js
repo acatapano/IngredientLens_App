@@ -44,6 +44,25 @@ export default function Button({ label, theme, onPress }) {
           </View>
         );
       }
+
+      if (theme === "third") {
+        return (
+          <View style={[styles.buttonContainer]}>
+            <Pressable
+              style={[styles.button, { backgroundColor: "#f14249" }]}
+              onPress={onPress}
+            >
+              <FontAwesome
+                name="rotate-right"
+                size={18}
+                color="#000"
+                style={styles.buttonIcon}
+              />
+              <Text style={[styles.buttonLabel, { color: "#000" }]}>{label}</Text>
+            </Pressable>
+          </View>
+        );
+      }
     
     return (
     <View style={styles.buttonContainer}>

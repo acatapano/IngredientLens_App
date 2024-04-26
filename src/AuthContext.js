@@ -10,34 +10,47 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
 
-  const login = (token) => {
-    setUserToken(token);
-    AsyncStorage.setItem('userToken', token);
-    console.log(userToken);
-    console.log("logged in");
-  }
+  const login = async (token) => {
+    try {
+      await AsyncStorage.setItem('userToken', token);
+      //console.log(userToken + " = new token");
+      console.log("logged in");
+      //console.log(await AsyncStorage.getItem('userToken'));
+    } catch (error) {
+      console.error('Error storing token:', error);
+    }
+  };
 
-  const logout = () => {
-    setUserToken(null);
-    AsyncStorage.removeItem('userToken');
-    console.log("logged out");
-  }
+  const logger = (token) => {
+    setUserToken(token);
+    console.log("logger ", userToken);
+  };
+
+  const logout = async () => {
+    try {
+      setUserToken(null);
+      await AsyncStorage.removeItem('userToken');
+      console.log("logged out");
+    } catch (error) {
+      console.error('Error removing token:', error);
+    }
+  };
 
   const isLoggedIn = async () => {
     try {
-      let userToken = await AsyncStorage.getItem('userToken');
-      setUserToken(userToken);
+      let token = await AsyncStorage.getItem('userToken');
+      setUserToken(token);
     } catch(e) {
       console.log('isLoggedIn error');
     }
-  }
+  };
 
   useEffect(() => {
     isLoggedIn();
   }, []);
 
   return (
-    <AuthContext.Provider value={{login, logout, userToken}}>
+    <AuthContext.Provider value={{login, logout, logger, userToken}}>
       {children}
     </AuthContext.Provider>
   );

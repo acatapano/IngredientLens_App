@@ -12,6 +12,7 @@ export default function LoginTest({ navigation }) {
   const [userLogin, setUserLogin] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const {login} = useContext(AuthContext);
+  const {logger} = useContext(AuthContext);
 
   const [isUserDataWrong, setIsUserDataWrong] = useState(false);
 
@@ -30,6 +31,7 @@ export default function LoginTest({ navigation }) {
         Alert.alert('Login Successful', 'Welcome!');
         navigation.navigate("Home");
         login(token);
+        logger(token);
       }else{
         setIsUserDataWrong(true);
         console.log('called');
